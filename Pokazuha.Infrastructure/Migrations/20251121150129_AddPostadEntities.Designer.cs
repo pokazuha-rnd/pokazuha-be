@@ -328,7 +328,7 @@ namespace Pokazuha.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(3)
                         .HasColumnType("nvarchar(3)")
-                        .HasDefaultValue("Lei");
+                        .HasDefaultValue("USD");
 
                     b.Property<string>("Description")
                         .IsRequired()

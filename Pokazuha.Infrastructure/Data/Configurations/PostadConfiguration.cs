@@ -37,7 +37,7 @@ namespace Pokazuha.Infrastructure.Data.Configurations
             builder.Property(p => p.Currency)
                 .IsRequired()
                 .HasMaxLength(3)
-                .HasDefaultValue("Lei");
+                .HasDefaultValue("USD");
 
             builder.Property(p => p.Category)
                 .IsRequired()
