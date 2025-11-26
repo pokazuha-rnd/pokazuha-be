@@ -34,7 +34,7 @@ namespace Pokazuha.Domain.Entities
 
         [Required]
         [MaxLength(3)]
-        public string Currency { get; set; } = "Lei";
+        public string Currency { get; set; } = "USD";
 
         [Required]
         [MaxLength(100)]

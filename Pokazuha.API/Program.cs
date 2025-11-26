@@ -129,7 +129,14 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
-        policy.WithOrigins("http://localhost:4200")
+        policy.WithOrigins(
+                   "http://localhost:4200",
+                    "http://157.180.75.224",
+                    "http://pokazuha.com",
+                    "http://www.pokazuha.com",
+                    "https://pokazuha.com",
+                    "https://www.pokazuha.com" 
+               )
               .AllowAnyMethod()
               .AllowAnyHeader()
               .AllowCredentials();
@@ -138,7 +145,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline
+ //Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
