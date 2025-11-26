@@ -24,13 +24,11 @@ namespace Pokazuha.Infrastructure.Repositories.Implementations
             _logger = logger;
             _sharedFolderPath = fileStorageSettings.Value.SharedFolderPath;
 
-            // Validate path
             if (string.IsNullOrWhiteSpace(_sharedFolderPath))
             {
                 throw new InvalidOperationException("SharedFolderPath is not configured in appsettings.json");
             }
 
-            // Create SharedFolder if it doesn't exist
             if (!Directory.Exists(_sharedFolderPath))
             {
                 Directory.CreateDirectory(_sharedFolderPath);
@@ -45,7 +43,6 @@ namespace Pokazuha.Infrastructure.Repositories.Implementations
 
             var savedPaths = new List<string>();
 
-            // Create folder: {SharedFolderPath}/{postadId}/
             var postadFolder = Path.Combine(_sharedFolderPath, postadId.ToString());
 
             if (!Directory.Exists(postadFolder))
@@ -58,19 +55,16 @@ namespace Pokazuha.Infrastructure.Repositories.Implementations
                 if (image.Length > 0)
                 {
                     try
-                    {
-                        // Generate unique filename: {guid}_{originalname}
+                    {                      
                         var uniqueFileName = $"{Guid.NewGuid()}_{SanitizeFileName(image.FileName)}";
                         var fullPath = Path.Combine(postadFolder, uniqueFileName);
 
-                        // Save file to disk
                         using (var stream = new FileStream(fullPath, FileMode.Create))
                         {
                             await image.CopyToAsync(stream);
                         }
 
-                        // Return relative path: {postadId}/{filename}
-                        var relativePath = Path.Combine(postadId.ToString(), uniqueFileName);
+                        var relativePath = $"{postadId}/{uniqueFileName}";
                         savedPaths.Add(relativePath);
 
                         _logger.LogInformation($"Saved image: {relativePath}");
@@ -134,7 +128,6 @@ namespace Pokazuha.Infrastructure.Repositories.Implementations
 
         public string GetFullPath(string relativePath)
         {
-            // relativePath format: {postadId}/{filename}
             return Path.Combine(_sharedFolderPath, relativePath);
         }
 
